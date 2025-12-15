@@ -1,16 +1,23 @@
-int PIN[] = {9,10,11,12,13};
-int PIN_COUNT = sizeof(PIN) / sizeof(PIN[0]);
+const uint8_t firstPin = 9;
+const uint8_t lastPin  = 13;
+
+uint8_t currentPin = firstPin;
 
 void setup() {
-  for (int i = 0; i < PIN_COUNT; i++) {
-    pinMode(PIN[i], OUTPUT);
+  for (uint8_t p = firstPin; p <= lastPin; p++) {
+    pinMode(p, OUTPUT);
+    digitalWrite(p, LOW);
   }
 }
 
 void loop() {
-  for (int i = 0; i < PIN_COUNT; i++) {
-    digitalWrite(PIN[i], HIGH);
-    delay(500);
-    digitalWrite(PIN[i], LOW);
-  }
+  uint8_t prevPin = currentPin;
+
+  if (currentPin < lastPin) currentPin++;
+  else currentPin = firstPin;
+
+  digitalWrite(prevPin, LOW);
+  digitalWrite(currentPin, HIGH);
+
+  delay(500);
 }
